@@ -1,0 +1,29 @@
+.form-container {
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+		
+		body {
+  background-color: black;
+}
+
+.iframe-container {
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			background-color: #000;
+        }
+		
+		h1 {
+  color: green;
+}
+
+body {
+  color: green;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Music Queue</title>
+    
+    <!-- External Scripts and Styles -->
+    <link rel="stylesheet" href="https://coolvibes-reloaded.com/ReqForm/ReqQue/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="hero">
+        <h1>DJ Song Queue</h1>
+    </div>  
+
+    <div id="display">
+        <div id="loader">
+            <h4>Loading</h4>
+        </div>
+        <div id="allSongs"></div>
+        <div id="errorMessage" style="display: none;">
+            <h2>Failed to get data. Please refresh</h2>
+        </div>
+    </div>
+
+    <a href="https://coolvibes-reloaded.com/ReqForm/form.html" target="_blank" style="text-decoration: none; color:white;">Fill out another song request</a>
+
+    <footer>
+        <h4>Powered by <a href="https://www.apispreadsheets.com" target="_blank" style="text-decoration: none; color:white;">API Spreadsheets</a></h4>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let allSongsElm = document.getElementById("allSongs");
+            let loaderElm = document.getElementById("loader");
+            let errorMessageElm = document.getElementById("errorMessage");
+
+            function setErrorDisplay() {
+                loaderElm.style.display = "none";
+                allSongsElm.style.display = "none";
+                errorMessageElm.style.display = "block";
+            }
+
+            // Fetch song requests from the API
+            fetch("https://api.apispreadsheets.com/data/7OySATKrFeiUEqMz/")
+                .then(res => {
+                    if (res.status === 200) {
+                        res.json().then(data => {
+                            const yourData = data["data"];
+                            
+                            // Clear the loader and error message
+                            loaderElm.style.display = "none";
+                            errorMessageElm.style.display = "none";
+
+                            // Populate the song requests
+                            yourData.forEach(rowInfo => {
+                                let rowInfoDiv = document.createElement("div");
+                                rowInfoDiv.classList.add("song-row");
+
+                                let rowSong = document.createElement("h2");
+                                rowSong.textContent = rowInfo["Song"];
+                                rowSong.classList.add("Song");
+
+                                let rowArtist = document.createElement("h4");
+                                rowArtist.textContent = rowInfo["Artist"];
+                                rowArtist.classList.add("Artist");
+
+                                let rowLink = document.createElement("a");
+                                rowLink.href = rowInfo["Link"];
+                                rowLink.target = "_blank";
+                                rowLink.textContent = rowInfo["Link"];
+                                rowLink.classList.add("Link");
+
+                                // Append elements to the div
+                                rowInfoDiv.appendChild(rowSong);
+                                rowInfoDiv.appendChild(rowArtist);
+                                rowInfoDiv.appendChild(rowLink);
+                                
+                                // Append the song row to the allSongs element
+                                allSongsElm.appendChild(rowInfoDiv);
+                            });
+
+                            // Display the song list
+                            allSongsElm.style.display = "block";
+
+                        }).catch(err => {
+                            console.error("Error parsing JSON:", err);
+                            setErrorDisplay();
+                        });
+                    } else {
+                        setErrorDisplay();
+                    }
+                }).catch(err => {
+                    console.error("Error with fetch:", err);
+                    setErrorDisplay();
+                });
+        });
+    </script>
+</body>
+</html>

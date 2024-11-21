@@ -8,18 +8,27 @@ async function sendMessage(event) {
                 const chatbox = document.getElementById('chatbox');
                 chatbox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
 
-                // Check if the user wants to create a flyer
-                if (message.toLowerCase().includes('create a flyer')) {
-                    const prompt = message.replace('create a flyer', '').trim();
-                    const flyerImageUrl = await generateFlyer(prompt);
+                // Detect commands
+                if (message.toLowerCase().startsWith("create a flyer")) {
+                    const flyerDetails = message.replace('create a flyer', '').trim();
+                    const flyerImageUrl = await generateFlyer(flyerDetails);
 
-                    // Display flyer image
+                    // Display the flyer
+                    if (flyerImageUrl) {
+                        chatbox.innerHTML += `
+                            <div><strong>Laura:</strong> Here's your flyer!</div>
+                            <div class="image-container"><img src="${flyerImageUrl}" alt="Generated Flyer"></div>
+                        `;
+                    } else {
+                        chatbox.innerHTML += `<div><strong>Laura:</strong> Sorry, I couldn't create the flyer. Please try again!</div>`;
+                    }
+                } else if (message.toLowerCase().startsWith("help with coding")) {
+                    // Example for coding help
                     chatbox.innerHTML += `
-                        <div><strong>Laura:</strong> Here is your flyer!</div>
-                        <div class="image-container"><img src="${flyerImageUrl}" alt="Generated Flyer"></div>
+                        <div><strong>Laura:</strong> Sure! Let me know your coding issue or what you're trying to build.</div>
                     `;
                 } else {
-                    // Call OpenAI API for general conversation
+                    // General chat fallback
                     const response = await fetch('https://api.openai.com/v1/chat/completions', {
                         method: 'POST',
                         headers: {
@@ -38,28 +47,31 @@ async function sendMessage(event) {
                     chatbox.innerHTML += `<div><strong>Laura:</strong> ${botMessage}</div>`;
                 }
 
-                // Scroll chatbox to the bottom
+                // Scroll to bottom
                 chatbox.scrollTop = chatbox.scrollHeight;
             }
         }
 
         // Function to generate the flyer using DALL·E API
-        async function generateFlyer(prompt) {
-            const response = await fetch('http://localhost:3000/create-flyer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt: prompt
-                })
-            });
+        async function generateFlyer(details) {
+            try {
+                const response = await fetch('http://localhost:3000/create-flyer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: `Create a flyer with the following details: ${details}`
+                    })
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (data.imageUrl) {
-                return data.imageUrl;
-            } else {
-                return 'https://via.placeholder.com/400'; // Placeholder if flyer generation fails
+                if (data.imageUrl) {
+                    return data.imageUrl;
+                }
+            } catch (error) {
+                console.error('Error generating flyer:', error);
+                return null;
             }
         }

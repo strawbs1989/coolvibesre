@@ -18,7 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
+const storage = getStorage(app);
 
 // List of predefined avatars
 const avatars = [
@@ -46,19 +46,8 @@ window.onload = () => {
     const authContainer = document.getElementById('auth-container');
     const fileInput = document.getElementById('fileInput');
     const messagesDiv = document.getElementById('messages');
-	const uploadBtn = document.getElementById('uploadBtn'); // Add the new upload button
+    const clearChat = document.getElementById('clearChat'); // Clear Chat button
 
-    // Ensure all necessary DOM elements exist
-    if (!loginBtn || !registerBtn || !sendMessage || !logoutBtn || !fileInput || !messagesDiv || !uploadBtn) {
-        console.error('One or more DOM elements are missing!');
-        return;
-    }
-	
-// Add event listener to the upload button
-    uploadBtn.addEventListener('click', () => {
-        fileInput.click(); // Trigger file input when upload button is clicked
-    });
-	
     // Email validation function
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -186,35 +175,11 @@ window.onload = () => {
             showAlert("Please enter a message to send.");
         }
     };
-	
-	document.getElementById('clearChat').addEventListener('click', function() {
-    const messagesDiv = document.getElementById('messages');
-    messagesDiv.innerHTML = ''; // Clear all the messages
-});
 
-
-    // File input change event (for avatar upload)
-    fileInput.addEventListener('change', async (event) => {
-        const file = event.target.files[0];
-        const user = auth.currentUser;
-
-        if (file && user) {
-            try {
-                const storageRef = ref(storage, `avatars/${user.uid}`);
-                const uploadResult = await uploadBytes(storageRef, file);
-                const downloadURL = await getDownloadURL(uploadResult.ref);
-
-                // Update avatar URL in Firestore
-                await setDoc(doc(db, 'users', user.uid), {
-                    avatar: downloadURL
-                }, { merge: true });
-
-                showAlert("Avatar updated successfully!");
-            } catch (error) {
-                console.error("Error uploading file:", error);
-            }
-        }
-    });
+    // Clear chat event
+    clearChat.onclick = () => {
+        messagesDiv.innerHTML = ''; // Clear all messages in the chat
+    };
 
     // Logout event
     logoutBtn.onclick = async () => {

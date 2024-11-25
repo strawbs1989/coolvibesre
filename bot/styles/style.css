@@ -1,25 +1,43 @@
 body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
         }
+
+        h1 {
+            color: #33ccff;
+            margin-bottom: 20px;
+        }
+
         #chatbox {
-            border: 1px solid #ccc;
+            border: 1px solid #000;
             padding: 10px;
-            width: 300px;
-            height: 400px;
+            width: 890px;
+            height: 510px;
             overflow-y: auto;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
         }
+
         input {
-            width: 100%;
+            width: 890px;
             padding: 10px;
+            border: 1px solid #000;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
         }
-        .image-container {
-            max-width: 100%;
-            max-height: 300px;
-            text-align: center;
-            margin-top: 10px;
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
-        .image-container img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+		
+		

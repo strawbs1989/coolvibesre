@@ -1,5 +1,5 @@
 let memory = {}; // Memory for the session
-const API_KEY = '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';
+
 
 document.getElementById('userInput').addEventListener('keyup', sendMessage);
 

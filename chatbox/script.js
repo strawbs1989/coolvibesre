@@ -186,6 +186,12 @@ window.onload = () => {
             showAlert("Please enter a message to send.");
         }
     };
+	
+	document.getElementById('clearChat').addEventListener('click', function() {
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.innerHTML = ''; // Clear all the messages
+});
+
 
     // File input change event (for avatar upload)
     fileInput.addEventListener('change', async (event) => {

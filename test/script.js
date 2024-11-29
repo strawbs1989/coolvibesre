@@ -14,12 +14,12 @@ let radio = {
 };
 
 // Event listener for user input
-document.getElementById("userInput").addEventListener("keyup", sendMessage);
+async function sendMessage(event) {
+    event.preventDefault(); // Prevents the form from refreshing the page
 
-async function sendMessage() {
     const input = document.getElementById("userInput");
     const message = input.value.trim();
-    input.value = "";
+    input.value = ""; // Clear the input field
 
     if (!message) return;
 
@@ -27,15 +27,20 @@ async function sendMessage() {
 
     const botMessage = await handleUserMessage(message.toLowerCase());
     appendMessage("Laura", botMessage);
-}
+  }
 
-function appendMessage(sender, message) {
+  function appendMessage(sender, message) {
     const chatbox = document.getElementById("chatbox");
     if (!chatbox) return;
 
     chatbox.innerHTML += `<div><strong>${sender}:</strong> ${message}</div>`;
     chatbox.scrollTop = chatbox.scrollHeight;
-}
+  }
+
+  async function handleUserMessage(userMessage) {
+    // Replace this with your bot logic
+    return `You said: "${userMessage}". I don't have a clever response yet.`;
+  }
 
 async function handleUserMessage(message) {
     // Radio commands

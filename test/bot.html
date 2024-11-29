@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laura Bot</title>
-	
- <!-- custom css-->
-	
-        <link href="https://coolvibes-reloaded.com/style.css" rel="stylesheet" />
-		<script src="https://coolvibes-reloaded.com/script.js"></script>
-		
 
+    <!-- Custom CSS -->
+    <link href="https://coolvibes-reloaded.com/style.css" rel="stylesheet">
 </head>
 <body>
     <h1>Chat with Laura</h1>
+    
+    <!-- Chatbox to display messages -->
     <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Type your message here..." onkeypress="sendMessage(event)">
-	
+    
+    <!-- Chat input form -->
+    <form id="chatForm" onsubmit="sendMessage(event)">
+        <input type="text" id="userInput" placeholder="Type your message here..." required>
+        <button type="submit">Send</button>
+    </form>
+
     <section>
-	<p class="info">Chat With Laura
-   She's A Loving, caring, Chatful Bot</p>
-   </section>
+        <p class="info">Chat With Laura<br>
+        She's A Loving, Caring, Chatful Bot</p>
+    </section>
+
+    <!-- Custom JavaScript -->
+    <script src="https://coolvibes-reloaded.com/script.js"></script>
 </body>
 </html>

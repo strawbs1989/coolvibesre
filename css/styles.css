@@ -11744,3 +11744,17 @@ html {
     left: -2vw;
   }
 }
+
+<-- new css -->
+body {
+  margin: 0; /* Remove default margins */
+  overflow: hidden; /* Hide scrollbars */
+  height: 100vh; /* Set height to viewport */
+  width: 100vw; /* Set width to viewport */
+}
+
+embed {
+  height: 100%; /* Fill the container */
+  width: 100%; /* Fill the container */
+  border: none; /* Remove borders */
+}

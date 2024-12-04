@@ -64,13 +64,19 @@
             }
             break;
         case 6: // Saturday
-            if (hr === 2 || hr === 3) { // 2:00 - 3:59 - 2 hours
-                dj.src = 'djimages/djbunny.jpg';
-                txt = '<a href="https://coolvibes-reloaded.com/req/" target="_blank">Saturday at 2 AM<br>Requests With<br>With Bunny</a>';
+            if (hr === 20 || hr === 22) { // 20:00 - 22:00 - 2 hours    
+                dj.src = 'on-air/images/jayshaun.png';
+                txt = '<a href="https://coolvibes-reloaded.com/req/" target="_blank">Saturday at 8 PM<br>TalkSegments With<br>Jay</a>';
+            }
+			break;
+        case 6: // Saturday
+            if (hr === 3 || hr === 5) { // 15:00 - 17:00 - 2 hours    
+                dj.src = 'on-air/images/off-air.png';
+                txt = '<a href="https://coolvibes-reloaded.com/req/" target="_blank">Saturday at 3 PM<br>Autodj<br>off-air</a>';
             }
             break;
         case 0: // Sunday
-            if (hr === 21) // 21:00 - 21:59 - 60 minutes - 1 hour
+            if (hr === 20) // 20:00 - 21:00 - 1 hour
                 dj.src = 'djimages/strawbs.png';
 				txt = '<a href="https://coolvibes-reloaded.com/requests/" target="_blank">Sunday at 9 PM<br>Requests<br></a>';
             break;

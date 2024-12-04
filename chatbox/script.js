@@ -177,9 +177,29 @@ window.onload = () => {
     };
 
     // Clear chat event
-    clearChat.onclick = () => {
-        messagesDiv.innerHTML = ''; // Clear all messages in the chat
-    };
+clearChat.onclick = async () => {
+    const userConfirmed = confirm("Are you sure you want to clear the chat? This will delete all messages.");
+    if (!userConfirmed) return;
+
+    // Clear Firestore messages
+    try {
+        const messagesRef = collection(db, 'messages');
+        const messagesSnapshot = await getDocs(messagesRef);
+
+        const deletePromises = [];
+        messagesSnapshot.forEach(doc => {
+            deletePromises.push(deleteDoc(doc.ref)); // Delete each document
+        });
+
+        await Promise.all(deletePromises);
+
+        // Clear the chat view
+        messagesDiv.innerHTML = ''; 
+        showAlert("Chat cleared successfully.");
+    } catch (error) {
+        showAlert("Error clearing chat: " + error.message);
+    }
+};
 
     // Logout event
     logoutBtn.onclick = async () => {
